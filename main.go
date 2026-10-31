@@ -7,7 +7,6 @@ import (
 	"hangman/internal/game"
 	"hangman/internal/parser"
 	"hangman/internal/scanner"
-	"io"
 )
 
 const WordStorageFilename = "embed/words.txt"
@@ -21,6 +20,9 @@ func main() {
 	for {
 		input, err := scanner.ScanLine()
 		if err != nil {
+			if errors.Is(err, scanner.ErrEOF) {
+				return
+			}
 			fmt.Println("Empty or missing input. Enter 'Y' or 'N'")
 			continue
 		}
@@ -33,7 +35,7 @@ func main() {
 
 		if userWantsPlay {
 			if err = play(); err != nil {
-				fmt.Println("Error. Could not start game")
+				fmt.Println("Error. Could not start/continue game")
 				return
 			}
 			fmt.Println("Do you want to play again? 'Y' / 'n'")
@@ -93,7 +95,7 @@ func nextUniqueLetter(state *game.GameState) (rune, error) {
 		}
 
 		switch {
-		case errors.Is(err, io.EOF):
+		case errors.Is(err, scanner.ErrEOF):
 			return ' ', err
 		case errors.Is(err, scanner.ErrInvalidInput):
 			fmt.Println("Empty or missing input. Enter enter one letter from English alphabet")
