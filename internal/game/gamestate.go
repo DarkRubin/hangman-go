@@ -19,7 +19,7 @@ func New(word string) *GameState {
 
 	mask := strings.Repeat("*", len(word))
 	return &GameState{
-		word:           word,
+		word:           strings.ToLower(word),
 		mask:           []rune(mask),
 		guessedLetters: []rune{},
 	}
