@@ -24,5 +24,5 @@ func NewDictionary(filename string) (*Dictionary, error) {
 }
 
 func (dict Dictionary) RandomWord() string {
-	return dict.words[rand.IntN(dict.count-1)]
+	return dict.words[rand.IntN(dict.count)]
 }
