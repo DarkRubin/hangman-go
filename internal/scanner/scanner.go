@@ -3,13 +3,15 @@ package scanner
 import (
 	"errors"
 	"fmt"
+	"io"
 	"regexp"
 )
 
 var (
-	InvalidInputError  = errors.New("invalid input")
-	InputTooLongError  = errors.New("input too long")
-	InvalidLetterError = errors.New("invalid letter")
+	ErrEOF           = errors.New("EOF")
+	ErrInvalidInput  = errors.New("invalid input")
+	ErrInputTooLong  = errors.New("input too long")
+	ErrInvalidLetter = errors.New("invalid letter")
 )
 
 func ScanEngLetter() (rune, error) {
@@ -20,12 +22,12 @@ func ScanEngLetter() (rune, error) {
 		}
 
 		if len(line) > 1 {
-			return ' ', InputTooLongError
+			return ' ', ErrInputTooLong
 		}
 
 		matched, err := regexp.MatchString("^[a-z]$", line)
 		if err != nil || !matched {
-			return rune(line[0]), InvalidLetterError
+			return rune(line[0]), ErrInvalidLetter
 		}
 
 		return rune(line[0]), nil
@@ -35,7 +37,10 @@ func ScanEngLetter() (rune, error) {
 func ScanLine() (line string, err error) {
 	n, err := fmt.Scanln(&line)
 	if err != nil || n != 1 {
-		return line, InvalidInputError
+		if err == io.EOF {
+			return "", ErrEOF
+		}
+		return line, ErrInvalidInput
 	}
 	return line, nil
 }
