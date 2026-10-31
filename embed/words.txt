@@ -191,7 +191,6 @@ cast
 catarrh
 cause
 cavity
-centi-
 ceremony
 certain
 certificate
@@ -326,7 +325,6 @@ dear
 death
 debit
 December
-deci-
 decision
 decrease
 defect
@@ -492,14 +490,12 @@ finger
 fingerprint
 firearm
 fired
-fire-engine
 firefly
 fireman
 fireplace
 firework
 firing
 first
-first-rate
 fisher
 fixed
 flame
@@ -568,8 +564,6 @@ glove
 glycerin
 gold
 goldfish
-goodlooking
-good-morning
 goodnight
 government
 grain
@@ -594,7 +588,6 @@ guess
 guide
 gun
 gunboat
-gun-carriage
 gunmetal
 gunpowder
 habit
@@ -721,7 +714,6 @@ keeper
 kennel
 kettle
 kidney
-kilo-
 king
 kitchen
 knife
@@ -772,7 +764,6 @@ locker
 locking
 locus
 longitude
-looking-glass
 loose
 loud
 luck
@@ -816,12 +807,10 @@ message
 metabolism
 metal
 meter
-micro-
 microscope
 middle
 military
 mill
-milli-
 million
 mine
 miner
@@ -1457,7 +1446,6 @@ turbine
 turning
 twelve
 twenty
-twenty-one
 twice
 twist
 typist
@@ -1522,8 +1510,6 @@ Wednesday
 weekend
 weight
 welcome
-well-being
-well-off
 whatever
 wheel
 whenever
@@ -1563,7 +1549,6 @@ wrist
 writer
 writing
 wrong
-x-ray
 year
 yearbook
 yellow
