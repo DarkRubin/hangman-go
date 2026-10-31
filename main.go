@@ -7,6 +7,7 @@ import (
 	"hangman/internal/game"
 	"hangman/internal/parser"
 	"hangman/internal/scanner"
+	"io"
 )
 
 const WordStorageFilename = "embed/words.txt"
@@ -58,7 +59,12 @@ func play() (err error) {
 		fmt.Println(state.GallowsArt())
 		fmt.Println("Current mistake count: ", state.GetMistakes())
 
-		letter := nextUniqueLetter(state)
+		var letter rune
+		letter, err = nextUniqueLetter(state)
+		if err != nil {
+			return err
+		}
+
 		if !state.Guess(letter) {
 			fmt.Printf("Unluck. There no '%c', in word '%s'! Mistakes count increased\n",
 				letter, state.GetMask())
@@ -75,7 +81,7 @@ func play() (err error) {
 	return nil
 }
 
-func nextUniqueLetter(state *game.GameState) rune {
+func nextUniqueLetter(state *game.GameState) (rune, error) {
 	for {
 		letter, err := scanner.ScanEngLetter()
 		if err == nil {
@@ -83,15 +89,17 @@ func nextUniqueLetter(state *game.GameState) rune {
 				fmt.Printf("Letter '%c' was already guessed, try another one\n", letter)
 				continue
 			}
-			return letter
+			return letter, nil
 		}
 
 		switch {
-		case errors.Is(err, scanner.InvalidInputError):
+		case errors.Is(err, io.EOF):
+			return ' ', err
+		case errors.Is(err, scanner.ErrInvalidInput):
 			fmt.Println("Empty or missing input. Enter enter one letter from English alphabet")
-		case errors.Is(err, scanner.InputTooLongError):
+		case errors.Is(err, scanner.ErrInputTooLong):
 			fmt.Println("You can choose only one English letter in one try")
-		case errors.Is(err, scanner.InvalidLetterError):
+		case errors.Is(err, scanner.ErrInvalidLetter):
 			fmt.Printf("Incorrect letter '%c'. Enter enter one letter from English alphabet\n", letter)
 		default:
 			panic("unreachable")
